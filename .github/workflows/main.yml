@@ -70,7 +70,7 @@ jobs:
       - uses: actions/checkout@v4
 
       # Request manual activation file
-      - uses: game-ci/unity-request-activation-file@v4
+      - uses: game-ci/unity-request-activation-file@v2
         id: getManualLicenseFile
 
       # Upload artifact (Unity_v20XX.X.XXXX.alf)
