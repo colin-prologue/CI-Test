@@ -4,13 +4,18 @@ on:
     workflow_dispatch:
         inputs:
             environment:
+                type: choice
                 description: 'Environment to deploy to'
                 required: true
-                default: 'production'
+                options:
+                - Linux
+                - Windows
+                - MacOS
+                default: 'Windows'
 
 jobs:
   buildForLinux:
-    if: github.event.inputs.environment == 'StandaloneLinux64'
+    if: github.event.inputs.environment == 'Linux'
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
@@ -57,7 +62,7 @@ jobs:
 
 
   buildForWindowsBasedPlatforms:
-    if: github.event.inputs.environment == 'StandaloneWindows'
+    if: github.event.inputs.environment == 'Windows'
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: windows-2022
     strategy:
@@ -96,7 +101,7 @@ jobs:
           path: build/${{ matrix.targetPlatform }}
 
   buildForMacOSBasedPlatforms:
-    if: github.event.inputs.environment == 'StandaloneOSX'
+    if: github.event.inputs.environment == 'MacOS'
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: macos-latest
     strategy:
