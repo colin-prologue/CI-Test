@@ -9,8 +9,6 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-          projectPath:
-            - test-project
           targetPlatform:
             #- StandaloneWindows64 # Build a Windows 64-bit standalone.
             - StandaloneLinux64 # Build a Linux 64-bit standalone.
@@ -27,13 +25,12 @@ jobs:
       # Cache
       - uses: actions/cache@v3
         with:
-          path: ${{ matrix.projectPath }}/Library
+          path: Library
           key:
-            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**', 'Packages/**',
+            Library--${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**', 'Packages/**',
             'ProjectSettings/**') }}
           restore-keys: |
-            Library-${{ matrix.projectPath }}${{ matrix.targetPlatform }}-
-            Library-${{ matrix.projectPath }}-
+            Library-${{ matrix.targetPlatform }}-
             Library-
     
       # Build
@@ -60,8 +57,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        projectPath:
-          - test-project
         unityVersion:
           - 2019.4.1f1
           - 2020.2.1f1
@@ -76,13 +71,12 @@ jobs:
           lfs: true
       - uses: actions/cache@v3
         with:
-          path: ${{ matrix.projectPath }}/Library
+          path: Library
           key:
-            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{
-            hashFiles(matrix.projectPath) }}
+            Library-${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**', 'Packages/**',
+            'ProjectSettings/**')}}
           restore-keys: |
-            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-
-            Library-${{ matrix.projectPath }}-
+            Library-${{ matrix.targetPlatform }}-
             Library-
       - uses: game-ci/unity-builder@v4
         env:
@@ -90,7 +84,6 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
@@ -105,8 +98,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        projectPath:
-          - test-project
         targetPlatform:
           - StandaloneOSX # Build a macOS standalone.
 
@@ -118,13 +109,12 @@ jobs:
 
       - uses: actions/cache@v3
         with:
-          path: ${{ matrix.projectPath }}/Library
+          path: Library
           key:
-            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{
-            hashFiles(matrix.projectPath) }}
+            Library-${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**', 'Packages/**',
+            'ProjectSettings/**') }}
           restore-keys: |
-            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-
-            Library-${{ matrix.projectPath }}-
+            Library-${{ matrix.targetPlatform }}-
             Library-
 
       - uses: game-ci/unity-builder@v4
@@ -133,7 +123,6 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
