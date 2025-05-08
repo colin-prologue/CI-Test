@@ -13,6 +13,9 @@ on:
                 - MacOS
                 - All
                 default: 'Windows'
+            # Not sure we need to specify build machine - sounds like the best bet
+            #   is to use the OS that matches the target platform
+            #   but this is here in case we want to override it
             build_machine:
                 type: choice
                 description: 'Build machine to use'
